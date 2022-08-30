@@ -229,10 +229,10 @@ function Get_DB_Info(){
         msoffice=0
     fi
 
-    read -r -p "Введите имя БД" response
+    read -r -p "Введите имя БД: " response
     name_db=response
 
-    read -r -p "Введите IP-адрес БД" response
+    read -r -p "Введите IP-адрес БД: " response
     ip_base=response
 
 }
