@@ -345,7 +345,10 @@ then
   	apt-get update && apt-get dist-upgrade -y
     if [[ $longbit -eq 0 ]];
     then
-        apt-get install wine wine-gecko wine-mono winetricks -y
+        apt-get install wine wine-gecko wine-mono winetricks i586-glibc-pthread i586-glibc-core -y
+        echo "" >> /home/$username/.bashrc
+        echo "#Workaround since we cant install i586 and x64 at once" >> /home/$username/.bashrc
+        echo "alias wine='/usr/bin/wine64'" >> /home/$username/.bashrc
     else
   	    apt-get install i586-wine.32bit wine-gecko wine-mono winetricks -y
     fi
