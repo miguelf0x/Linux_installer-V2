@@ -25,6 +25,7 @@ ip_base='192.168.0.0'  	#IP сервера с БД
 oracle_version=''
 postgre_sql=''		#При использовании указать версию 13.
 java_home=''
+msoffice=1  # не используется по умолчанию
 
 #Ссылка на клиенты Oracle, можно указать на локальный каталог(Опционально)
 url_oracle_client_11='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/XP_WIN2003_client_32bit/oracle_client_x32.tar'
@@ -218,10 +219,17 @@ function Get_DB_Info(){
         fi
 	  fi
 
+    read -r -p "Для печати будет использоваться Microsoft Office? [д/Н] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY]|[дД][аА]|[дД])$ ]]
+    then
+        msoffice=0
+    fi
+
 }
 
 
 function Generate_Config(){
+
     echo "# Имя пользователя" > ./main.cfg
     echo "username=$username" >> ./main.cfg
     echo "# IP-адрес общей папки" >> ./main.cfg
@@ -248,14 +256,14 @@ function Generate_Config(){
     echo "postgre_sql=$postgre_sql" >> ./main.cfg
     echo "# Домашний каталог JRE" >> ./main.cfg
     echo "java_home=$java_home" >> ./main.cfg
+    echo "# Признак использования MS Office [0 - да]" >> ./main.cfg
+    echo "java_home=$java_home" >> ./main.cfg
     echo "# Домашний каталог LibreOffice" >> ./main.cfg
     echo "libre_office_home=$java_home" >> ./main.cfg
     echo "# Расположение LibreOffice" >> ./main.cfg
     echo "libre_office_install_location=$java_home" >> ./main.cfg
     echo "# Конфиг создан $(date)" >> ./main.cfg
     echo "source.config записан!" >> /home/$username/linux_installer/install_log.log
-
-
 
 }
 
