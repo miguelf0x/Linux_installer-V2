@@ -17,11 +17,11 @@ ip_mount='192.168.0.0'
 username_share='share'
 password_share=''
 domain=''
-distr=''	#Варианты AltLinux8,AltLinux9,RedOS,AstraLinux,RosaLinux,Ubuntu,Centos8
+distr=''	      # AltLinux8,AltLinux9,RedOS,AstraLinux,RosaLinux,Ubuntu,Centos8
 icon_version=0  # 6 для Java 6, 8 для Java 8
 url_java=''
-name_db=''      		#Название БД(обычно MED)
-ip_base='192.168.0.0'  	#IP сервера с БД
+name_db=''              #Название БД(обычно MED)
+ip_base='192.168.0.0'   #IP сервера с БД
 oracle_version=''
 postgre_sql=''		#При использовании указать версию 13.
 java_home=''
@@ -63,6 +63,7 @@ function Get_Base_Info(){
 }
 
 function Select_Distro(){
+
     echo "Полуавтоматическая установка доступна для дистрибутивов:"
     echo "1. Alt Linux 8"
     echo "2. Alt Linux 9"
@@ -235,6 +236,7 @@ function Generate_Config(){
 
     echo "# Имя пользователя" > ./main.cfg
     echo "username=$username" >> ./main.cfg
+    echo "" >> ./main.cfg
     echo "# IP-адрес общей папки" >> ./main.cfg
     echo "ip_mount=$ip_mount" >> ./main.cfg
     echo "# Имя пользователя с доступом к общей папке" >> ./main.cfg
@@ -243,10 +245,12 @@ function Generate_Config(){
     echo "password_share=$password_share" >> ./main.cfg
     echo "# Домен (при необходимости)" >> ./main.cfg
     echo "domain=$domain" >> ./main.cfg
+    echo "" >> ./main.cfg
     echo "# Дистрибутив" >> ./main.cfg
     echo "distr=$distr" >> ./main.cfg
     echo "# Разрядность системы" >> ./main.cfg
     echo "longbit=$longbit" >> ./main.cfg
+    echo "" >> ./main.cfg
     echo "# Версия ярлыков" >> ./main.cfg
     echo "icon_version=$icon_version" >> ./main.cfg
     echo "# URL для скачивания JRE" >> ./main.cfg
@@ -262,13 +266,18 @@ function Generate_Config(){
     echo "# Домашний каталог JRE" >> ./main.cfg
     echo "java_home=$java_home" >> ./main.cfg
     echo "# Признак использования MS Office [0 - да]" >> ./main.cfg
-    echo "java_home=$java_home" >> ./main.cfg
+    echo "msoffice=$msoffice" >> ./main.cfg
     echo "# Домашний каталог LibreOffice" >> ./main.cfg
     echo "libre_office_home=$java_home" >> ./main.cfg
     echo "# Расположение LibreOffice" >> ./main.cfg
     echo "libre_office_install_location=$java_home" >> ./main.cfg
     echo "# Конфиг создан $(date)" >> ./main.cfg
-    echo "source.config записан!" >> /home/$username/linux_installer/install_log.log
+
+    if [[ -f main.cfg ]];
+    then
+        echo "main.cfg создан успешно"
+        echo "main.cfg создан успешно" >> /home/$username/linux_installer/install_log.log
+    fi
 
 }
 
