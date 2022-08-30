@@ -4,8 +4,22 @@
 # Variables                                                                   #
 ###############################################################################
 
-wine=''
+username=''
+distr=''
 
+#InstantClient работает с АРМами после обновления от 28.05.20
+#PosgreSQLODBC работает с АРМами после обновления от 23.08.21
+oracle_version='' 	#Приоритет использования версий: 12, InstantClient, 11.
+postgre_sql=''		#При использовании указать версию 13.
+
+#Ссылки на Oracle Client, можно указать на локальный каталог(Опционально)
+url_oracle_client_11='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/XP_WIN2003_client_32bit/oracle_client_x32.tar'
+url_oracle_client_12='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/win32_12201_client.tar'
+url_instant_client='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/instant_client19.tar'
+
+#Ссылка на PosgreSQLODBC, можно указать на локальный каталог(Опционально)
+url_postgre_sql='https://ftp.postgresql.org/pub/odbc/versions/msi/psqlodbc_13_01_0000-x86.zip'
+wine=''
 
 ###############################################################################
 # Load CFG                                                                    #
