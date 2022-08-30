@@ -274,9 +274,9 @@ function Generate_Config(){
     echo "# Признак использования MS Office [0 - да]" >> ./main.cfg
     echo "msoffice=$msoffice" >> ./main.cfg
     echo "# Домашний каталог LibreOffice" >> ./main.cfg
-    echo "libre_office_home=$java_home" >> ./main.cfg
+    echo "libre_office_home=$libre_office_home" >> ./main.cfg
     echo "# Расположение LibreOffice" >> ./main.cfg
-    echo "libre_office_install_location=$java_home" >> ./main.cfg
+    echo "libre_office_install_location=$libre_office_install_location" >> ./main.cfg
     echo "# Конфиг создан $(date)" >> ./main.cfg
 
     if [[ -f main.cfg ]];
