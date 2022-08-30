@@ -1889,7 +1889,7 @@ Create_Oracle_Connect
 if [[ $icon_version -eq 6 ]];
 then
 
-    tar -xf java6_icons.tar
+    tar -xf /home/$username/linux_installer/java6_icons.tar
 
     Create_C_ico_legacy
     Create_java_ico_sh_legacy
@@ -1897,7 +1897,7 @@ then
 elif [[ $icon_version -eq 8 ]];
 then
 
-    tar -xf java8_icons.tar -C /home/$username --strip-components=1
+    tar -xf /home/$username/linux_installer/java8_icons.tar -C /home/$username --strip-components=1
 
     libpath='java.library.path=../lib/'
     catalog_ico='/home/'$username'/ico/'
