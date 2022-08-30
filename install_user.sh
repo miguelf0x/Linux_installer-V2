@@ -1883,7 +1883,7 @@ then
 elif [[ $icon_version -eq 8 ]];
 then
 
-    tar -xf java8_icons.tar -C /home/$username
+    tar -xf java8_icons.tar -C /home/$username --strip-components=1
 
     libpath='java.library.path=../lib/'
     catalog_ico='/home/'$username'/ico/'
