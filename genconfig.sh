@@ -2,10 +2,10 @@
 
 
 ##############################################################################
-#                              genconfig script    							 #
-#                                                                            # 
+#                              genconfig script    							             #
+#                                                                            #
 # This script is designed for configuring ARIADNA MIS installer for Linux OS #
-#                                                                            # 
+#                                                                            #
 ##############################################################################
 
 ###############################################################################
@@ -18,6 +18,7 @@ username_share='share'
 password_share=''
 domain=''
 distr=''	#Варианты AltLinux8,AltLinux9,RedOS,AstraLinux,RosaLinux,Ubuntu,Centos8
+icon_version=0  # 6 для Java 6, 8 для Java 8
 url_java=''
 name_db=''      		#Название БД(обычно MED)
 ip_base='192.168.0.0'  	#IP сервера с БД
@@ -25,17 +26,16 @@ oracle_version=''
 postgre_sql=''		#При использовании указать версию 13.
 java_home=''
 
-#Ссылка на Oracle Client 11, можно указать на локальный каталог(Опционально)
+#Ссылка на клиенты Oracle, можно указать на локальный каталог(Опционально)
 url_oracle_client_11='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/XP_WIN2003_client_32bit/oracle_client_x32.tar'
-
-#Ссылка на Oracle Client 12, можно указать на локальный каталог(Опционально)
 url_oracle_client_12='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/win32_12201_client.tar'
-
-#Ссылка на Instant Client, можно указать на локальный каталог(Опционально) 
 url_instant_client='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/instant_client19.tar'
 
-#Ссылка на PosgreSQLODBC, можно указать на локальный каталог(Опционально) 
+#Ссылка на PosgreSQLODBC, можно указать на локальный каталог(Опционально)
 url_postgre_sql='https://ftp.postgresql.org/pub/odbc/versions/msi/psqlodbc_13_01_0000-x86.zip'
+
+libre_office_home='/usr/lib64/LibreOffice/program/classes/'
+libre_office_install_location='/usr/lib64/LibreOffice/'
 
 ###############################################################################
 # Functions                                                                   #
@@ -116,11 +116,13 @@ function Select_Java_Version(){
             if [[ $response -eq 1 ]];
             then
                 url_java="http://klokan.spb.ru/PUB/jre-8u301-linux-x64.tar.gz"
-				java_home='/opt/java/jre1.8.0_301'
+				        java_home='/opt/java/jre1.8.0_301'
+                icon_version=8
             elif [[ $response -eq 2 ]];
             then
                 url_java="http://klokan.spb.ru/PUB/jre-6u45-linux-x64.bin"
-				java_home='/opt/java/jre1.6.0_45'
+				        java_home='/opt/java/jre1.6.0_45'
+                icon_version=6
             else
                 echo "Некорректный ввод."
             fi
@@ -138,11 +140,13 @@ function Select_Java_Version(){
             if [[ $response -eq 1 ]];
             then
                 url_java="http://klokan.spb.ru/PUB/jre-8u301-linux-i586.tar.gz"
-				java_home='/opt/java/jre1.8.0_301'
+				        java_home='/opt/java/jre1.8.0_301'
+                icon_version=8
             elif [[ $response -eq 2 ]];
             then
                 url_java="http://klokan.spb.ru/PUB/jre-6u45-linux-i586.bin"
-				java_home='/opt/java/jre1.6.0_45'
+				        java_home='/opt/java/jre1.6.0_45'
+                icon_version=6
             else
                 echo "Некорректный ввод."
             fi
@@ -153,45 +157,110 @@ function Select_Java_Version(){
 }
 
 function Get_DB_Info(){
-	
-	source ./config.source
-	
+
 	echo "Допустимые версии Oracle Client:"
 	echo "1. Oracle Client 12"
-	echo "2. Oracle InstantClient"
+	echo "2. Oracle InstantClient [работает с АРМ после обновления от 28.05.20]"
 	echo "3. Oracle Client 11"
 
 	while [[ $oracle_version = "" ]]
-    do
-        read -r -p "Введите порядковый номер необходимой версии: " response
-        if [[ $response -eq 1 ]];
-        then
-            oracle_version='12'
-			#TODO: добавить ручной ввод URL
-        elif [[ $response -eq 2 ]];
-        then
-            oracle_version='InstantClient'
-			#TODO: добавить ручной ввод URL
-        elif [[ $response -eq 3 ]];
-        then
-			oracle_version='11'
-			#TODO: добавить ручной ввод URL
-		else
-			echo "Некорректный ввод."
-		fi
-	done
+      do
+          read -r -p "Введите порядковый номер необходимой версии: " response
+          if [[ $response -eq 1 ]];
+          then
+              oracle_version='12'
 
-    read -r -p "Будет ли использоваться PostgreSQL? [д/Н] " response
-	if [[ "$response" =~ ^([yY][eE][sS]|[yY]|[дД]|[дД][аА])$ ]]
-	then
-		postgre_sql='13'
-		#TODO: добавить ручной ввод URL
-	fi
- 
+              read -r -p "Использовать адрес для скачивания клиента Oracle по умолчанию? [д/Н] " response
+          	  if [[ "$response" =~ ^([nN][oO]|[nN]|[нН][еЕ][тТ]|[нН])$ ]]
+          	  then
+          		    read -r -p "Введите URL или локальный каталог" response
+                  url_oracle_client_12=response
+          	  fi
+
+          elif [[ $response -eq 2 ]];
+          then
+
+              oracle_version='InstantClient'
+
+              read -r -p "Использовать адрес для скачивания клиента Oracle по умолчанию? [д/Н] " response
+          	  if [[ "$response" =~ ^([nN][oO]|[nN]|[нН][еЕ][тТ]|[нН])$ ]]
+          	  then
+          		    read -r -p "Введите URL или локальный каталог" response
+                  url_instant_client=response
+          	  fi
+
+          elif [[ $response -eq 3 ]];
+          then
+
+              oracle_version='11'
+
+              read -r -p "Использовать адрес для скачивания клиента Oracle по умолчанию? [д/Н] " response
+          	  if [[ "$response" =~ ^([nN][oO]|[nN]|[нН][еЕ][тТ]|[нН])$ ]]
+          	  then
+          		    read -r -p "Введите URL или локальный каталог" response
+                  url_oracle_client_11=response
+          	  fi
+
+          else
+  			      echo "Некорректный ввод."
+  		    fi
+      done
+
+    read -r -p "Будет ли использоваться PostgreSQL [работает с АРМ после обновления от 23.08.21]? [д/Н] " response
+	  if [[ "$response" =~ ^([yY][eE][sS]|[yY]|[дД][аА]|[дД])$ ]]
+	  then
+		    postgre_sql='13'
+        read -r -p "Использовать адрес для скачивания PosgreSQLODBC по умолчанию? [д/Н] " response
+        if [[ "$response" =~ ^([nN][oO]|[nN]|[нН][еЕ][тТ]|[нН])$ ]]
+        then
+            read -r -p "Введите URL или локальный каталог" response
+            url_postgre_sql=response
+        fi
+	  fi
+
 }
+
 
 function Generate_Config(){
-	echo "username=$username" > ./config.source
-    echo "distr=$distr" >> ./config.source
+    echo "# Имя пользователя" > ./main.cfg
+    echo "username=$username" >> ./main.cfg
+    echo "# IP-адрес общей папки" >> ./main.cfg
+    echo "ip_mount=$ip_mount" >> ./main.cfg
+    echo "# Имя пользователя с доступом к общей папке" >> ./main.cfg
+    echo "username_share=$username_share" >> ./main.cfg
+    echo "# Пароль пользователя с доступом к общей папке" >> ./main.cfg
+    echo "password_share=$password_share" >> ./main.cfg
+    echo "# Домен (при необходимости)" >> ./main.cfg
+    echo "domain=$domain" >> ./main.cfg
+    echo "# Дистрибутив" >> ./main.cfg
+    echo "distr=$distr" >> ./main.cfg
+    echo "# Версия ярлыков" >> ./main.cfg
+    echo "icon_version=$icon_version" >> ./main.cfg
+    echo "# URL для скачивания JRE" >> ./main.cfg
+    echo "url_java=$url_java" >> ./main.cfg
+    echo "# Имя БД" >> ./main.cfg
+    echo "name_db=$name_db" >> ./main.cfg
+    echo "# IP-адрес БД" >> ./main.cfg
+    echo "ip_base=$ip_base" >> ./main.cfg
+    echo "# Версия Oracle Client" >> ./main.cfg
+    echo "oracle_version=$oracle_version" >> ./main.cfg
+    echo "# Версия PostgreSQL" >> ./main.cfg
+    echo "postgre_sql=$postgre_sql" >> ./main.cfg
+    echo "# Домашний каталог JRE" >> ./main.cfg
+    echo "java_home=$java_home" >> ./main.cfg
+    echo "# Домашний каталог LibreOffice" >> ./main.cfg
+    echo "libre_office_home=$java_home" >> ./main.cfg
+    echo "# Расположение LibreOffice" >> ./main.cfg
+    echo "libre_office_install_location=$java_home" >> ./main.cfg
+    echo "# Конфиг создан $(date)" >> ./main.cfg
     echo "source.config записан!" >> /home/$username/linux_installer/install_log.log
+
+
+
 }
+
+Select_Distro
+Get_Base_Info
+Select_Java_Version
+Get_DB_Info
+Generate_Config
