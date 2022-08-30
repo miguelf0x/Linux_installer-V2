@@ -144,7 +144,7 @@ function Install_Oracle_12() {
 
 cd /home/$username/linux_installer
 
-if [ $oracle_version = '12' ];
+if [[ $oracle_version = '12' ]];
 then
 
 	if [ -f win32_12201_client.tar ];
@@ -163,7 +163,7 @@ then
 		cd /home/$username/.wine/drive_c/distrib/client32
 	else
 		cd /home/$username/.wine/drive_c/distrib
-		echo'Распаковка win32_12201_client.tar' >> /home/$username/linux_installer/install_log.log
+		echo 'Распаковка win32_12201_client.tar' >> /home/$username/linux_installer/install_log.log
 		tar -xvf win32_12201_client.tar
 		cd /home/$username/.wine/drive_c/distrib/client32
 	fi
@@ -184,7 +184,7 @@ function Install_Oracle_11() {
 
 cd /home/$username/linux_installer
 
-if [ $oracle_version = '11' ];
+if [[ $oracle_version = '11' ]];
 then
 
 	if [ -f oracle_client_x32.tar ];
@@ -223,7 +223,7 @@ function Install_Oracle_Instant() {
 
 	cd /home/$username/linux_installer
 
-if [ $oracle_version = 'InstantClient' ];
+if [[ $oracle_version = 'InstantClient' ]];
 then
 
 	if [ -d /home/$username/.wine/drive_c/oracle ];
