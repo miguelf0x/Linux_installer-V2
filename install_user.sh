@@ -4,21 +4,7 @@
 # Variables                                                                   #
 ###############################################################################
 
-username=''
-distr=''
-
-#InstantClient работает с АРМами после обновления от 28.05.20
-#PosgreSQLODBC работает с АРМами после обновления от 23.08.21
-oracle_version='' 	#Приоритет использования версий: 12, InstantClient, 11.
-postgre_sql=''		#При использовании указать версию 13.
-
-#Ссылки на Oracle Client, можно указать на локальный каталог(Опционально)
-url_oracle_client_11='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/XP_WIN2003_client_32bit/oracle_client_x32.tar'
-url_oracle_client_12='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/win32_12201_client.tar'
-url_instant_client='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/instant_client19.tar'
-
-#Ссылка на PosgreSQLODBC, можно указать на локальный каталог(Опционально)
-url_postgre_sql='https://ftp.postgresql.org/pub/odbc/versions/msi/psqlodbc_13_01_0000-x86.zip'
+wine=''
 
 
 ###############################################################################
@@ -37,6 +23,19 @@ source ./main.cfg
 # Install Wine and stuff                                                      #
 ###############################################################################
 
+function Select_Wine() {
+
+	if [ -f /usr/bin/wine ];
+	then
+			wine='/usr/bin/wine'
+	elif [ -f /usr/bin/wine64 ];
+	then
+			wine='/usr/bin/wine64'
+	else
+			echo "ERR: No Wine found" >> /home/$username/linux_installer/install_log.log
+	fi
+
+}
 
 function Install_Winetricks() {
 
@@ -59,7 +58,7 @@ else
 
 	if [ $distr = 'Centos8' ];
 	then
-		WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
+		WINEARCH=win32 WINEPREFIX=~/.wine $wine wineboot
 	fi
 
 	if [ $distr = 'RosaLinux' ];
@@ -79,16 +78,16 @@ else
 
 	if [ $distr = 'Centos8' ];
 	then
-		wine ~/.cache/winetricks/vcrun2010/vcredist_x86.exe
-		wine ~/.cache/winetricks/vcrun2005/vcredist_x86.exe
+		$wine ~/.cache/winetricks/vcrun2010/vcredist_x86.exe
+		$wine ~/.cache/winetricks/vcrun2005/vcredist_x86.exe
 	fi
 
 	if [ $distr = 'AltLinux8' || $distr = 'AltLinux9' ];
 	then
 		cd ~/.cache/winetricks/vcrun2005
-		wine vcredist_x86.EXE
+		$wine vcredist_x86.EXE
 		cd ~/.cache/winetricks/vcrun2010
-		wine vcredist_x86.EXE
+		$wine vcredist_x86.EXE
 	fi
 
 fi
@@ -112,7 +111,7 @@ then
 		wget http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86.msi
 	fi
 
-	wine msiexec /i wine_gecko-2.47-x86.msi
+	$wine msiexec /i wine_gecko-2.47-x86.msi
 
 	if [ -f wine_gecko-2.47-x86_64.msi ];
 	then
@@ -122,7 +121,7 @@ then
 		wget http://dl.winehq.org/wine/wine-gecko/2.47/wine_gecko-2.47-x86_64.msi
 	fi
 
-	wine msiexec /i wine_gecko-2.47-x86_64.msi
+	$wine msiexec /i wine_gecko-2.47-x86_64.msi
 
 fi
 }
@@ -158,7 +157,7 @@ then
 	if [ -f setup.exe ];
 	then
 		echo 'Установка OracleClient' >> /home/$username/linux_installer/install_log.log
-		wine setup.exe -ignorePrereq -J"-Doracle.install.client.validate.clientSupportedOSCheck=false"
+		$wine setup.exe -ignorePrereq -J"-Doracle.install.client.validate.clientSupportedOSCheck=false"
 	else
 		echo 'ERR: Setup.exe не найден' >> /home/$username/linux_installer/install_log.log
 	fi
@@ -197,7 +196,7 @@ then
 	if [ -f setup.exe ];
 	then
 		echo 'Установка OracleClient' >> /home/$username/linux_installer/install_log.log
-		wine setup.exe
+		$wine setup.exe
 	else
 		echo 'ERR: Setup.exe не найден' >> /home/$username/linux_installer/install_log.log
 	fi
@@ -274,7 +273,7 @@ then
 	if [ -f psqlodbc_x86.msi ];
 	then
 		echo 'Установка PostgreSQL Client' >> /home/$username/linux_installer/install_log.log
-		wine start psqlodbc_x86.msi
+		$wine start psqlodbc_x86.msi
 	else
 		echo 'ERR: psqlodbc_x86.msi не найден' >> /home/$username/linux_installer/install_log.log
 	fi
@@ -1864,6 +1863,7 @@ function Config_print(){
 
 #Запуск функций
 
+Select_Wine
 Install_Winetricks
 Install_Oracle_12
 Install_Oracle_11

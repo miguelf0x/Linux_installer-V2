@@ -349,6 +349,7 @@ then
         echo "" >> /home/$username/.bashrc
         echo "#Workaround since we cant install i586 and x64 at once" >> /home/$username/.bashrc
         echo "alias wine='/usr/bin/wine64'" >> /home/$username/.bashrc
+
     else
   	    apt-get install i586-wine.32bit wine-gecko wine-mono winetricks -y
     fi
