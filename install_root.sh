@@ -343,7 +343,12 @@ if [[ $distr = 'AltLinux8' ]];
 then
   	echo 'Установка wine, конфигурация AltLinux8' >> /home/$username/linux_installer/install_log.log
   	apt-get update && apt-get dist-upgrade -y
-  	apt-get install i586-wine.32bit wine wine-gecko wine-mono winetricks -y
+    if [[ $longbit -eq 0 ]];;
+    then
+        apt-get install wine wine-gecko wine-mono winetricks -y
+    else
+  	    apt-get install i586-wine.32bit wine-gecko wine-mono winetricks -y
+    fi
 fi
 
 if [[ $distr = 'AltLinux9' ]];

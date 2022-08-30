@@ -26,6 +26,7 @@ oracle_version=''
 postgre_sql=''		#При использовании указать версию 13.
 java_home=''
 msoffice=1  # не используется по умолчанию
+long_bit=2  # 0 - true
 
 #Ссылка на клиенты Oracle, можно указать на локальный каталог(Опционально)
 url_oracle_client_11='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/XP_WIN2003_client_32bit/oracle_client_x32.tar'
@@ -107,6 +108,7 @@ function Select_Java_Version(){
     if [[ $(getconf LONG_BIT) -eq 64 ]];
     then
 
+        long_bit=0
         echo "Доступны следующие дистрибутивы Java:"
         echo "1. Java Runtime Environment 8 x64"
         echo "2. Java Runtime Environment 6 x64"
@@ -131,6 +133,7 @@ function Select_Java_Version(){
 
     else
 
+        longbit=1
         echo "Доступны следующие дистрибутивы Java:"
         echo "1. Java Runtime Environment 8 i586"
         echo "2. Java Runtime Environment 6 i586"
@@ -242,6 +245,8 @@ function Generate_Config(){
     echo "domain=$domain" >> ./main.cfg
     echo "# Дистрибутив" >> ./main.cfg
     echo "distr=$distr" >> ./main.cfg
+    echo "# Разрядность системы" >> ./main.cfg
+    echo "longbit=$longbit" >> ./main.cfg
     echo "# Версия ярлыков" >> ./main.cfg
     echo "icon_version=$icon_version" >> ./main.cfg
     echo "# URL для скачивания JRE" >> ./main.cfg
