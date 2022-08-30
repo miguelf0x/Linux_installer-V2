@@ -109,7 +109,7 @@ function Select_Java_Version(){
     if [[ $(getconf LONG_BIT) -eq 64 ]];
     then
 
-        long_bit=0
+        longbit=0
         echo "Доступны следующие дистрибутивы Java:"
         echo "1. Java Runtime Environment 8 x64"
         echo "2. Java Runtime Environment 6 x64"
