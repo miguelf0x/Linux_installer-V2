@@ -1872,7 +1872,7 @@ Install_Postgre_Sql
 Cp_Arm
 Create_Oracle_Connect
 
-if [[ $icon_version -eq 6 ]];;
+if [[ $icon_version -eq 6 ]];
 then
 
     tar -xf java6_icons.tar
@@ -1880,7 +1880,7 @@ then
     Create_C_ico_legacy
     Create_java_ico_sh_legacy
 
-elif [[ $icon_version -eq 8 ]];;
+elif [[ $icon_version -eq 8 ]];
 then
 
     tar -xf java8_icons.tar -C /home/$username
@@ -1894,7 +1894,7 @@ then
 
     Create_C_ico
 
-    if [[ $msoffice -eq 1 ]];;
+    if [[ $msoffice -eq 1 ]];
     then
         Create_java_ico_sh
     else
