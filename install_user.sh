@@ -70,12 +70,12 @@ else
 		WINEARCH=win32 winecfg
 	fi
 
-	if [ $distr = 'Centos8' ];
+	if [[ $distr = 'Centos8' ]];
 	then
 		WINEARCH=win32 WINEPREFIX=~/.wine $wine wineboot
 	fi
 
-	if [ $distr = 'RosaLinux' ];
+	if [[ $distr = 'RosaLinux' ]];
 	then
 		cd /home/$username
 		wget http://www.kegel.com/wine/winetricks
@@ -90,13 +90,13 @@ else
 	winetricks vcrun2010
 	winetricks vcrun2005
 
-	if [ $distr = 'Centos8' ];
+	if [[ $distr = 'Centos8' ]];
 	then
 		$wine ~/.cache/winetricks/vcrun2010/vcredist_x86.exe
 		$wine ~/.cache/winetricks/vcrun2005/vcredist_x86.exe
 	fi
 
-	if [ $distr = 'AltLinux8' || $distr = 'AltLinux9' ];
+	if [[ $distr = 'AltLinux8' || $distr = 'AltLinux9' ]];
 	then
 		cd ~/.cache/winetricks/vcrun2005
 		$wine vcredist_x86.EXE
