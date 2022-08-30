@@ -33,7 +33,7 @@ url_oracle_client_11='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/XP_WIN200
 url_oracle_client_12='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/win32_12201_client.tar'
 url_instant_client='http://klokan.spb.ru/PUB/oraarch/ORACLE%20CLIENT/instant_client19.tar'
 
-#Ссылка на PosgreSQLODBC, можно указать на локальный каталог(Опционально)
+#Ссылка на PostgreSQLODBC, можно указать на локальный каталог(Опционально)
 url_postgre_sql='https://ftp.postgresql.org/pub/odbc/versions/msi/psqlodbc_13_01_0000-x86.zip'
 
 libre_office_home='/usr/lib64/LibreOffice/program/classes/'
@@ -215,7 +215,7 @@ function Get_DB_Info(){
 	  if [[ "$response" =~ ^([yY][eE][sS]|[yY]|[дД][аА]|[дД])$ ]]
 	  then
 		    postgre_sql='13'
-        read -r -p "Использовать адрес для скачивания PosgreSQLODBC по умолчанию? [д/Н] " response
+        read -r -p "Использовать адрес для скачивания PostgreSQLODBC по умолчанию? [д/Н] " response
         if [[ "$response" =~ ^([nN][oO]|[nN]|[нН][еЕ][тТ]|[нН])$ ]]
         then
             read -r -p "Введите URL или локальный каталог" response
@@ -228,6 +228,12 @@ function Get_DB_Info(){
     then
         msoffice=0
     fi
+
+    read -r -p "Введите имя БД" response
+    name_db=response
+
+    read -r -p "Введите IP-адрес БД" response
+    ip_base=response
 
 }
 
