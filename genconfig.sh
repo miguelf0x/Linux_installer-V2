@@ -230,10 +230,10 @@ function Get_DB_Info(){
     fi
 
     read -r -p "Введите имя БД: " response
-    name_db=response
+    name_db=$response
 
     read -r -p "Введите IP-адрес БД: " response
-    ip_base=response
+    ip_base=$response
 
 }
 
