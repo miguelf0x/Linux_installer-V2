@@ -343,7 +343,7 @@ if [[ $distr = 'AltLinux8' ]];
 then
   	echo 'Установка wine, конфигурация AltLinux8' >> /home/$username/linux_installer/install_log.log
   	apt-get update && apt-get dist-upgrade -y
-    if [[ $longbit -eq 0 ]];;
+    if [[ $longbit -eq 0 ]];
     then
         apt-get install wine wine-gecko wine-mono winetricks -y
     else
