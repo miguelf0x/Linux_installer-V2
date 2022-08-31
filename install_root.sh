@@ -445,6 +445,12 @@ esac
 
 if [ $EUID == 0 ];
 then
+
+  if ! [ -f $log_file ];
+  then
+    touch $log_file
+  fi
+
   Mount_ARM
   Install_Java
   Install_Wine
