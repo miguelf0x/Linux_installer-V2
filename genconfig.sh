@@ -50,7 +50,7 @@ function Get_Base_Info(){
 
     until [[ $ip_mount ~= ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$ ]]
     do
-      read -r -p "Введите IP-адрес сервера данных: " response
+      read -r -p "Введите IP-адрес сетевой папки: " response
       ip_mount=$response
     done
 
@@ -64,6 +64,8 @@ function Get_Base_Info(){
     domain=$response
 
 }
+
+##############################################################################
 
 function Select_Distro(){
 
@@ -106,6 +108,8 @@ function Select_Distro(){
     done
 
 }
+
+##############################################################################
 
 function Select_Java_Version(){
 
@@ -163,6 +167,8 @@ function Select_Java_Version(){
     fi
 
 }
+
+##############################################################################
 
 function Get_DB_Info(){
 
@@ -242,6 +248,7 @@ function Get_DB_Info(){
     done
 }
 
+##############################################################################
 
 function Generate_Config(){
 
@@ -291,6 +298,8 @@ function Generate_Config(){
     fi
 
 }
+
+##############################################################################
 
 Select_Distro
 Get_Base_Info

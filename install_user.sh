@@ -51,6 +51,8 @@ function Select_Wine() {
 
 }
 
+###############################################################################
+
 function Install_Winetricks() {
 
 if [ -d /home/$username/.wine ];
@@ -140,6 +142,8 @@ then
 fi
 }
 
+###############################################################################
+
 function Install_Oracle_12() {
 
 cd /home/$username/linux_installer
@@ -180,6 +184,8 @@ fi
 
 }
 
+###############################################################################
+
 function Install_Oracle_11() {
 
 cd /home/$username/linux_installer
@@ -219,6 +225,8 @@ fi
 
 }
 
+###############################################################################
+
 function Install_Oracle_Instant() {
 
 	cd /home/$username/linux_installer
@@ -256,6 +264,8 @@ then
 fi
 
 }
+
+###############################################################################
 
 function Install_Postgre_Sql() {
 
@@ -296,6 +306,7 @@ fi
 
 }
 
+###############################################################################
 
 function Cp_Arm(){
 
@@ -327,6 +338,7 @@ function Cp_Arm(){
 	fi
 }
 
+###############################################################################
 
 function Create_C_ico_legacy(){
 
@@ -555,6 +567,8 @@ function Create_C_ico_legacy(){
 				echo 'Icon=7765_winebrowser.0'
 				} > /home/$username/.local/share/applications/wine-extension-pdf.desktop
 }
+
+###############################################################################
 
 function Create_java_ico_sh_legacy(){
 
@@ -1012,6 +1026,8 @@ function Create_java_ico_sh_legacy(){
 	fi
 }
 
+###############################################################################
+
 function Create_C_ico(){
 local C_index[0]=0
 local C_index[1]=1
@@ -1213,6 +1229,8 @@ local C_name_file[28]='ArmStacDoctor.exe'
 			fi
 		done
 }
+
+###############################################################################
 
 function Create_java_ico_sh(){
 
@@ -1656,6 +1674,8 @@ function Create_java_ico_sh(){
   	fi
 }
 
+###############################################################################
+
 function Create_java_ico_wine(){
 local JAVA_index[0]=0
 local JAVA_index[1]=1
@@ -1799,6 +1819,8 @@ local JAVA_name_file[18]='ArmVaccination.bat'
 		done
 }
 
+###############################################################################
+
 function Create_Oracle_Connect(){
 
 if [ $oracle_version = '11' ];
@@ -1896,6 +1918,7 @@ then
 fi
 }
 
+###############################################################################
 
 function Config_print(){
 	if [ -d $JAVA_catalog_arm ]; then
@@ -1903,8 +1926,7 @@ function Config_print(){
 	fi
 }
 
-
-#Запуск функций
+###############################################################################
 
 Select_Wine
 Install_Winetricks

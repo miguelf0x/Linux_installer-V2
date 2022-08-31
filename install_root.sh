@@ -93,7 +93,6 @@ then
     } > 'updater.sh'
 fi
 
-
 if [[ $distr = 'RedOS' || $distr = 'AstraLinux' || $distr = 'RosaLinux' || $distr = 'Ubuntu' ]];
 then
     {
@@ -107,8 +106,6 @@ then
     } > 'updater.sh'
 fi
 
-
-
 if [[ $distr = 'AstraLinux' || $distr = 'Ubuntu' ]]; then
 	sudo echo '@reboot sh /home/'$username'/updater.sh' > /var/spool/cron/root
 	else
@@ -117,11 +114,11 @@ if [[ $distr = 'AstraLinux' || $distr = 'Ubuntu' ]]; then
 
 }
 
+###############################################################################
 
 function Install_Java(){
 
 cd /home/$username/linux_installer
-
 
 #Java 6 Version x32
 if [[ $url_java = 'http://klokan.spb.ru/PUB/jre-6u45-linux-i586.bin' ]];
@@ -321,6 +318,8 @@ fi
 
 }
 
+###############################################################################
+
 function Install_Wine() {
 
 cd /home/$username/linux_installer
@@ -416,6 +415,8 @@ then
 fi
 }
 
+###############################################################################
+
 function Run_Crontab() {
     if [[ $distr = 'AstraLinux' ]];
     then
@@ -428,9 +429,13 @@ function Run_Crontab() {
     echo 'Служба Crontab включена, автозапуск добавлен' >> $log_file
 }
 
+###############################################################################
+
 function Host_for_oracle_client() {
     echo '127.0.0.1	'$HOSTNAME' localhost '> /etc/hosts
 }
+
+###############################################################################
 
 case $EUID in
    0) ;;
