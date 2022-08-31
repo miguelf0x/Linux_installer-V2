@@ -345,7 +345,7 @@ then
   	apt-get update && apt-get dist-upgrade -y
     if [[ $longbit -eq 0 ]];
     then
-        /bin/bash /alt_wine_install.sh
+        /bin/bash /home/$username/linux_installer/alt_wine_install.sh
         apt-get install wine-gecko wine-mono winetricks -y
     else
   	    apt-get install i586-wine.32bit wine-gecko wine-mono winetricks -y
