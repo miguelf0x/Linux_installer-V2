@@ -432,8 +432,18 @@ function Host_for_oracle_client() {
     echo '127.0.0.1	'$HOSTNAME' localhost '> /etc/hosts
 }
 
-Mount_ARM
-Install_Java
-Install_Wine
-Run_Crontab
-Host_for_oracle_client
+case $EUID in
+   0) ;;
+   *) echo "Требуется повышение привилегий - введите пароль root:"
+      su root -c $0 "$@" ;;
+esac
+LAST_DIR=$PWD
+
+if [ $EUID == 0 ];
+then
+  Mount_ARM
+  Install_Java
+  Install_Wine
+  Run_Crontab
+  Host_for_oracle_client
+fi
