@@ -122,7 +122,6 @@ then
   i586-libv4l-devel \
   i586-libunixODBC-devel \
   i586-libpcap-devel \
-  i586-libfaudio-devel \
   i586-libgtk+3-devel  \
   i586-libcairo-devel \
   i586-libva-devel \
@@ -166,8 +165,8 @@ then
   i586-libXv-devel >> $wine_log
 
   echo "[ Устанавливаем среду разработки ]"
-  apt-get -y install i586-gcc8 i586-gcc8-c++ i586-gcc8-fortran i586-glibc-core >> $wine_log
-  apt-get -y install gcc8 gcc8-c++ gcc8-fortran glibc-core cmake >> $wine_log
+  apt-get -y install i586-gcc8-c++ i586-gcc8-fortran i586-glibc-core >> $wine_log
+  apt-get -y install gcc8-c++ gcc8-fortran glibc-core cmake >> $wine_log
   apt-get -y install m4 bison flex build-environment >> $wine_log
   mkdir -p build-win64 build-win32
   cd build-win64
