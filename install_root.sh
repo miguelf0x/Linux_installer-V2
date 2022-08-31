@@ -437,7 +437,6 @@ case $EUID in
    *) echo "Требуется повышение привилегий - введите пароль root:"
       su root -c $0 "$@" ;;
 esac
-LAST_DIR=$PWD
 
 if [ $EUID == 0 ];
 then
