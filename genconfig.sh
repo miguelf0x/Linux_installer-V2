@@ -48,7 +48,8 @@ function Get_Base_Info(){
     read -r -p "Введите имя пользователя: " response
     username=$response
 
-    until [[ $ip_mount =~ ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$ ]]
+    local $regexpr="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"
+    until [ $ip_mount =~ $regexpr ]
     do
       read -r -p "Введите IP-адрес сетевой папки: " response
       ip_mount=$response
@@ -241,7 +242,8 @@ function Get_DB_Info(){
     read -r -p "Введите имя БД: " response
     name_db=$response
 
-    until [[ response =~ ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$ ]]
+    local $regexpr="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"
+    until [ $ip_mount =~ $regexpr ]
     do
       read -r -p "Введите IP-адрес БД: " response
       ip_base=$response
