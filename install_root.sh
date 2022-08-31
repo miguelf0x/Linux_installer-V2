@@ -14,7 +14,7 @@ domain=''
 #Варианты AltLinux8,AltLinux9,RedOS,AstraLinux,RosaLinux,Ubuntu,Centos8
 distr=''
 url_java=""
-
+log_file='/home/$username/linux_installer/install_log.log'
 
 ###############################################################################
 # Load CFG                                                                    #
@@ -33,25 +33,25 @@ cd /home/$username/linux_installer
 
 if [[ -d /mnt/ARM ]];
 then
-    echo 'Каталог /mnt/ARM уже существует' >> /home/$username/linux_installer/install_log.log
+    echo 'Каталог /mnt/ARM уже существует' >> $log_file
 else
-		echo 'Создание каталога /mnt/ARM' >> /home/$username/linux_installer/install_log.log
+		echo 'Создание каталога /mnt/ARM' >> $log_file
 		mkdir /mnt/ARM
 		if [[ $? -eq 0 ]];
     then
-        echo 'Каталог /mnt/ARM создан' >> /home/$username/linux_installer/install_log.log
+        echo 'Каталог /mnt/ARM создан' >> $log_file
     else
-        echo 'Невозможно создать каталог /mnt/ARM' >> /home/$username/linux_installer/install_log.log
+        echo 'Невозможно создать каталог /mnt/ARM' >> $log_file
     fi
 fi
 
 if [[ -d /mnt/ARM/APP ]];
 then
-    echo 'Каталог /mnt/ARM/APP уже монтирован' >> /home/$username/linux_installer/install_log.log
+    echo 'Каталог /mnt/ARM/APP уже монтирован' >> $log_file
 else
     if [[ $distr = 'AstraLinux' ]];
     then
-        echo 'Монтирование каталога' >> /home/$username/linux_installer/install_log.log
+        echo 'Монтирование каталога' >> $log_file
 				if [[ $domain = '' ]];
         then
             sudo mount -t cifs //$ip_mount/ARIADNA/ /mnt/ARM -o username=$username_share,rw,password=$password_share
@@ -59,25 +59,25 @@ else
             sudo mount -t cifs //$ip_mount/ARIADNA/ /mnt/ARM -o username=$username_share,rw,password=$password_share,domain=$domain
 				fi
     else
-        echo 'Монтирование каталога' >> /home/$username/linux_installer/install_log.log
+        echo 'Монтирование каталога' >> $log_file
 				if [[ $domain = '' ]];
         then
             mount -t cifs //$ip_mount/ARIADNA/ /mnt/ARM -o username=$username_share,rw,password=$password_share
 				else
             mount -t cifs //$ip_mount/ARIADNA/ /mnt/ARM -o username=$username_share,rw,password=$password_share,domain=$domain
 				fi
-			  echo 'Каталог с АРМами монтирован в каталог /mnt/ARM' >> /home/$username/linux_installer/install_log.log
+			  echo 'Каталог с АРМами монтирован в каталог /mnt/ARM' >> $log_file
     fi
 fi
 
 if [[ -f updater.sh ]];
 then
-    echo 'updater.sh уже существует' >> /home/$username/linux_installer/install_log.log
+    echo 'updater.sh уже существует' >> $log_file
 else
 		cd /home/$username
-		echo 'Создание updater.sh' >> /home/$username/linux_installer/install_log.log
+		echo 'Создание updater.sh' >> $log_file
 		touch updater.sh
-		echo 'Sh скрипт updater.sh создан' >> /home/$username/linux_installer/install_log.log
+		echo 'Sh скрипт updater.sh создан' >> $log_file
 fi
 
 if [[ $distr = 'AltLinux8' || $distr = 'AltLinux9' || $distr = 'Centos8' ]];
@@ -129,42 +129,42 @@ then
 
     if [ -d /opt/java/jre1.6.0_45 ];
     then
-        echo 'Каталог /opt/java/jre1.6.0_45 уже создан, JAVA установлена' >> /home/$username/linux_installer/install_log.log
+        echo 'Каталог /opt/java/jre1.6.0_45 уже создан, JAVA установлена' >> $log_file
 		else
-        echo 'Создание каталога /opt/java' >> /home/$username/linux_installer/install_log.log
+        echo 'Создание каталога /opt/java' >> $log_file
         mkdir /opt/java
     fi
 
     if [ -f jre-6u45-linux-i586.bin ];
     then
-		    echo 'Дистрибутив JAVA уже скачан' >> /home/$username/linux_installer/install_log.log
+		    echo 'Дистрибутив JAVA уже скачан' >> $log_file
 		else
-				echo 'Дистрибутива JAVA нет' >> /home/$username/linux_installer/install_log.log
-				echo 'Скачивание дистрибутива java' >> /home/$username/linux_installer/install_log.log
+				echo 'Дистрибутива JAVA нет' >> $log_file
+				echo 'Скачивание дистрибутива java' >> $log_file
 				wget $url_java
     fi
 
     if [ -d /home/$username/jre1.6.0_45 ];
     then
-		    echo 'JAVA Распакована'  >> /home/$username/linux_installer/install_log.log
+		    echo 'JAVA Распакована'  >> $log_file
 		else
-        echo 'Разархивация JAVA'  >> /home/$username/linux_installer/install_log.log
+        echo 'Разархивация JAVA'  >> $log_file
         chmod a+x /home/$username/linux_installer/jre-6u45-linux-i586.bin
         /home/$username/linux_installer/jre-6u45-linux-i586.bin
-        echo 'Удаление jre-6u45-linux-i586.bin' >> /home/$username/linux_installer/install_log.log
+        echo 'Удаление jre-6u45-linux-i586.bin' >> $log_file
         rm -f jre-6u45-linux-i586.bin
     fi
 
     if [ -d /opt/java/jre1.6.0_45 ];
     then
-		    echo 'Найдена JAVA в каталоге /opt/java/jre1.6.0_45' >> /home/$username/linux_installer/install_log.log
+		    echo 'Найдена JAVA в каталоге /opt/java/jre1.6.0_45' >> $log_file
 		else
-        echo 'Перемещение каталога /home/'$username'/linux_installer/jre1.6.0_45 в /opt/java/jre1.6.0_45' >> /home/$username/linux_installer/install_log.log
+        echo 'Перемещение каталога /home/'$username'/linux_installer/jre1.6.0_45 в /opt/java/jre1.6.0_45' >> $log_file
         mv /home/$username/linux_installer/jre1.6.0_45 /opt/java/jre1.6.0_45
-        echo 'Каталог перемещен'  >> /home/$username/linux_installer/install_log.log
-        echo 'Регистрация JAVA в PATH' >> /home/$username/linux_installer/install_log.log
+        echo 'Каталог перемещен'  >> $log_file
+        echo 'Регистрация JAVA в PATH' >> $log_file
         export PATH=$PATH:/opt/java/jre1.6.0_45/bin/
-        echo 'PATH зарегистрирован' >> /home/$username/linux_installer/install_log.log
+        echo 'PATH зарегистрирован' >> $log_file
     fi
 fi
 
@@ -174,42 +174,42 @@ then
 
     if [ -d /opt/java/jre1.6.0_45 ];
     then
-        echo 'Каталог /opt/java/jre1.6.0_45 уже создан, JAVA установлена' >> /home/$username/linux_installer/install_log.log
+        echo 'Каталог /opt/java/jre1.6.0_45 уже создан, JAVA установлена' >> $log_file
 		else
-        echo 'Создание каталога /opt/java' >> /home/$username/linux_installer/install_log.log
+        echo 'Создание каталога /opt/java' >> $log_file
         mkdir /opt/java
     fi
 
     if [ -f jre-6u45-linux-x64.bin ];
     then
-		    echo 'Дистрибутив JAVA уже скачан' >> /home/$username/linux_installer/install_log.log
+		    echo 'Дистрибутив JAVA уже скачан' >> $log_file
 		else
-				echo 'Дистрибутива JAVA нет' >> /home/$username/linux_installer/install_log.log
-				echo 'Скачивание дистрибутива java' >> /home/$username/linux_installer/install_log.log
+				echo 'Дистрибутива JAVA нет' >> $log_file
+				echo 'Скачивание дистрибутива java' >> $log_file
 				wget $url_java
     fi
 
     if [ -d /home/$username/jre1.6.0_45 ];
     then
-		    echo 'JAVA Распакована'  >> /home/$username/linux_installer/install_log.log
+		    echo 'JAVA Распакована'  >> $log_file
 		else
-        echo 'Разархивация JAVA'  >> /home/$username/linux_installer/install_log.log
+        echo 'Разархивация JAVA'  >> $log_file
         chmod a+x /home/$username/linux_installer/jre-6u45-linux-x64.bin
         /home/$username/linux_installer/jre-6u45-linux-x64.bin
-        echo 'Удаление jre-6u45-linux-x64.bin' >> /home/$username/linux_installer/install_log.log
+        echo 'Удаление jre-6u45-linux-x64.bin' >> $log_file
         rm -f jre-6u45-linux-x64.bin
     fi
 
     if [ -d /opt/java/jre1.6.0_45 ];
     then
-        echo 'Найдена JAVA в каталоге /opt/java/jre1.6.0_45' >> /home/$username/linux_installer/install_log.log
+        echo 'Найдена JAVA в каталоге /opt/java/jre1.6.0_45' >> $log_file
 		else
-			  echo 'Перемещение каталога /home/'$username'/linux_installer/jre1.6.0_45 в /opt/java/jre1.6.0_45' >> /home/$username/linux_installer/install_log.log
+			  echo 'Перемещение каталога /home/'$username'/linux_installer/jre1.6.0_45 в /opt/java/jre1.6.0_45' >> $log_file
 			  mv /home/$username/linux_installer/jre1.6.0_45 /opt/java/jre1.6.0_45
-			  echo 'Каталог перемещен'  >> /home/$username/linux_installer/install_log.log
-			  echo 'Регистрация JAVA в PATH' >> /home/$username/linux_installer/install_log.log
+			  echo 'Каталог перемещен'  >> $log_file
+			  echo 'Регистрация JAVA в PATH' >> $log_file
 			  export PATH=$PATH:/opt/java/jre1.6.0_45/bin/
-			  echo 'PATH зарегистрирован' >> /home/$username/linux_installer/install_log.log
+			  echo 'PATH зарегистрирован' >> $log_file
     fi
 fi
 
@@ -218,41 +218,41 @@ if [[ $url_java = 'http://klokan.spb.ru/PUB/jre-8u301-linux-i586.tar' ]];
 then
     if [ -d /opt/java/jre1.8.0_301 ];
     then
-        echo 'Каталог /opt/java/jre1.8.0_301 уже создан, JAVA установлена' >> /home/$username/linux_installer/install_log.log
+        echo 'Каталог /opt/java/jre1.8.0_301 уже создан, JAVA установлена' >> $log_file
 		else
-        echo 'Создание каталога /opt/java' >> /home/$username/linux_installer/install_log.log
+        echo 'Создание каталога /opt/java' >> $log_file
         mkdir /opt/java
     fi
 
     if [ -f jre-8u301-linux-i586.tar ];
     then
-		    echo 'Дистрибутив JAVA уже скачан' >> /home/$username/linux_installer/install_log.log
+		    echo 'Дистрибутив JAVA уже скачан' >> $log_file
     else
-        echo 'Дистрибутива JAVA нет' >> /home/$username/linux_installer/install_log.log
-        echo 'Скачивание дистрибутива java' >> /home/$username/linux_installer/install_log.log
+        echo 'Дистрибутива JAVA нет' >> $log_file
+        echo 'Скачивание дистрибутива java' >> $log_file
 				wget $url_java
     fi
 
     if [ -d /home/$username/jre1.8.0_301 ];
     then
-		    echo 'JAVA Распакована'  >> /home/$username/linux_installer/install_log.log
+		    echo 'JAVA Распакована'  >> $log_file
 		else
-        echo 'Разархивация JAVA'  >> /home/$username/linux_installer/install_log.log
+        echo 'Разархивация JAVA'  >> $log_file
 			  tar -xvz /home/$username/linux_installer/jre-8u301-linux-i586.tar
-			  echo 'Удаление jre-8u301-linux-i586.tar' >> /home/$username/linux_installer/install_log.log
+			  echo 'Удаление jre-8u301-linux-i586.tar' >> $log_file
         rm -f jre-8u301-linux-i586.tar
     fi
 
     if [ -d /opt/java/jre1.8.0_301 ];
     then
-		    echo 'Найдена JAVA в каталоге /opt/java/jre1.8.0_301' >> /home/$username/linux_installer/install_log.log
+		    echo 'Найдена JAVA в каталоге /opt/java/jre1.8.0_301' >> $log_file
     else
-        echo 'Перемещение каталога /home/'$username'/linux_installer/jre1.8.0_301 в /opt/java/jre1.8.0_301' >> /home/$username/linux_installer/install_log.log
+        echo 'Перемещение каталога /home/'$username'/linux_installer/jre1.8.0_301 в /opt/java/jre1.8.0_301' >> $log_file
         mv /home/$username/linux_installer/jre1.8.0_301 /opt/java/jre1.8.0_301
-        echo 'Каталог перемещен'  >> /home/$username/linux_installer/install_log.log
-        echo 'Регистрация JAVA в PATH' >> /home/$username/linux_installer/install_log.log
+        echo 'Каталог перемещен'  >> $log_file
+        echo 'Регистрация JAVA в PATH' >> $log_file
         export PATH=$PATH:/opt/java/jre1.8.0_301/bin/
-        echo 'PATH зарегистрирован' >> /home/$username/linux_installer/install_log.log
+        echo 'PATH зарегистрирован' >> $log_file
     fi
 fi
 
@@ -261,41 +261,41 @@ if [[ $url_java = 'http://klokan.spb.ru/PUB/jre-8u301-linux-x64.tar' ]];
 then
     if [ -d /opt/java/jre1.8.0_301 ];
     then
-        echo 'Каталог /opt/java/jre1.8.0_301 уже создан, JAVA установлена' >> /home/$username/linux_installer/install_log.log
+        echo 'Каталог /opt/java/jre1.8.0_301 уже создан, JAVA установлена' >> $log_file
 		else
-        echo 'Создание каталога /opt/java' >> /home/$username/linux_installer/install_log.log
+        echo 'Создание каталога /opt/java' >> $log_file
         mkdir /opt/java
     fi
 
     if [ -f jre-8u301-linux-x64.tar ];
     then
-		    echo 'Дистрибутив JAVA уже скачан' >> /home/$username/linux_installer/install_log.log
+		    echo 'Дистрибутив JAVA уже скачан' >> $log_file
     else
-				echo 'Дистрибутива JAVA нет' >> /home/$username/linux_installer/install_log.log
-				echo 'Скачивание дистрибутива java' >> /home/$username/linux_installer/install_log.log
+				echo 'Дистрибутива JAVA нет' >> $log_file
+				echo 'Скачивание дистрибутива java' >> $log_file
 				wget $url_java
     fi
 
     if [ -d /home/$username/jre1.8.0_301 ];
     then
-		    echo 'JAVA Распакована'  >> /home/$username/linux_installer/install_log.log
+		    echo 'JAVA Распакована'  >> $log_file
     else
-        echo 'Разархивация JAVA'  >> /home/$username/linux_installer/install_log.log
+        echo 'Разархивация JAVA'  >> $log_file
         tar -xvz /home/$username/linux_installer/jre-8u301-linux-x64.tar
-        echo 'Удаление jre-8u301-linux-x64.tar' >> /home/$username/linux_installer/install_log.log
+        echo 'Удаление jre-8u301-linux-x64.tar' >> $log_file
         rm -f jre-8u301-linux-x64.tar
     fi
 
     if [ -d /opt/java/jre1.8.0_301 ];
     then
-		    echo 'Найдена JAVA в каталоге /opt/java/jre1.8.0_301' >> /home/$username/linux_installer/install_log.log
+		    echo 'Найдена JAVA в каталоге /opt/java/jre1.8.0_301' >> $log_file
     else
-        echo 'Перемещение каталога /home/'$username'/linux_installer/jre1.8.0_301 в /opt/java/jre1.8.0_301' >> /home/$username/linux_installer/install_log.log
+        echo 'Перемещение каталога /home/'$username'/linux_installer/jre1.8.0_301 в /opt/java/jre1.8.0_301' >> $log_file
         mv /home/$username/linux_installer/jre1.8.0_301 /opt/java/jre1.8.0_301
-        echo 'Каталог перемещен'  >> /home/$username/linux_installer/install_log.log
-        echo 'Регистрация JAVA в PATH' >> /home/$username/linux_installer/install_log.log
+        echo 'Каталог перемещен'  >> $log_file
+        echo 'Регистрация JAVA в PATH' >> $log_file
         export PATH=$PATH:/opt/java/jre1.8.0_301/bin/
-        echo 'PATH зарегистрирован' >> /home/$username/linux_installer/install_log.log
+        echo 'PATH зарегистрирован' >> $log_file
     fi
 fi
 
@@ -327,21 +327,21 @@ cd /home/$username/linux_installer
 
 if [[ $distr = 'AstraLinux' ]];
 then
-  	echo 'Установка wine, конфигурация AstraLinux' >> /home/$username/linux_installer/install_log.log
+  	echo 'Установка wine, конфигурация AstraLinux' >> $log_file
   	apt-get update && apt-get upgrade -y
   	apt-get install wine winetricks zenity -y
 fi
 
 if [[ $distr = 'Ubuntu' ]];
 then
-  	echo 'Установка wine, конфигурация Ubuntu' >> /home/$username/linux_installer/install_log.log
+  	echo 'Установка wine, конфигурация Ubuntu' >> $log_file
   	apt-get update && apt-get upgrade -y
   	apt-get install wine winetricks zenity -y
 fi
 
 if [[ $distr = 'AltLinux8' ]];
 then
-  	echo 'Установка wine, конфигурация AltLinux8' >> /home/$username/linux_installer/install_log.log
+  	echo 'Установка wine, конфигурация AltLinux8' >> $log_file
   	apt-get update && apt-get dist-upgrade -y
     if [[ $longbit -eq 0 ]];
     then
@@ -354,21 +354,21 @@ fi
 
 if [[ $distr = 'AltLinux9' ]];
 then
-  	echo 'Установка wine, конфигурация AltLinux9' >> /home/$username/linux_installer/install_log.log
+  	echo 'Установка wine, конфигурация AltLinux9' >> $log_file
   	apt-get update && apt-get dist-upgrade -y
   	apt-get install i586-wine.32bit wine-mono winetricks -y
 fi
 
 if [[ $distr = 'RedOS' ]];
 then
-  	echo 'Установка wine, конфигурация RedOS' >> /home/$username/linux_installer/install_log.log
+  	echo 'Установка wine, конфигурация RedOS' >> $log_file
   	yum update && yum upgrade -y
   	yum install wine winetricks -y
 fi
 
 if [[ $distr = 'RosaLinux' ]];
 then
-  	echo 'Установка wine, конфигурация RosaLinux' >> /home/$username/linux_installer/install_log.log
+  	echo 'Установка wine, конфигурация RosaLinux' >> $log_file
   	yum update && yum upgrade -y
   	sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
   	cd /home/$username/linux_installer
@@ -391,7 +391,7 @@ fi
 
 if [[ $distr = 'Centos8' ]];
 then
-  	echo 'Установка wine, конфигурация Centos8' >> /home/$username/linux_installer/install_log.log
+  	echo 'Установка wine, конфигурация Centos8' >> $log_file
   	yum update && yum upgrade -y
   	dnf groupinstall 'Development Tools' -y
   	dnf -y install epel-release
@@ -425,7 +425,7 @@ function Run_Crontab() {
 
     systemctl enable crond
     systemctl start crond
-    echo 'Служба Crontab включена, автозапуск добавлен' >> /home/$username/linux_installer/install_log.log
+    echo 'Служба Crontab включена, автозапуск добавлен' >> $log_file
 }
 
 function Host_for_oracle_client() {
