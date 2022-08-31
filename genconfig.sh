@@ -48,7 +48,7 @@ function Get_Base_Info(){
     read -r -p "Введите имя пользователя: " response
     username=$response
 
-    regexpr="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"
+    regexpr=^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$
     while ! [[ $response =~ $regexpr ]]
     do
       read -r -p "Введите IP-адрес сетевой папки: " response
