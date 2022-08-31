@@ -5,9 +5,9 @@
 # Variables                                                                   #
 ###############################################################################
 
-username='username'
-ip_mount='192.168.0.0'
-username_share='share'
+username=''
+ip_mount=''
+username_share=''
 password_share=''
 domain=''
 
