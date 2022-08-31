@@ -1801,50 +1801,77 @@ local JAVA_name_file[18]='ArmVaccination.bat'
 
 function Create_Oracle_Connect(){
 
-if [ $oracle_version = '11' ]; then
-echo 'Регистрация TNSNAME и SQLNET Oracle 11' >> /home/$username/linux_installer/install_log.log
-	touch /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/tnsnames.ora
-		{
-		echo ''$name_db' ='
-		echo '  (DESCRIPTION ='
-		echo '    (ADDRESS_LIST ='
-		echo '      (ADDRESS = (PROTOCOL = TCP)(HOST = '$ip_base')(PORT = 1521))'
-		echo '    )'
-		echo '    (CONNECT_DATA ='
-		echo '      (SERVICE_NAME = '$name_db')'
-		echo '    )'
-		echo '  )'
-		} > /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/tnsnames.ora
-	touch /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/sqlnet.ora
-		{
-		echo '#SQLNET.AUTHENTICATION_SERVICES= (NTS)'
-		echo 'NAMES.DIRECTORY_PATH= (TNSNAMES, EZCONNECT)'
-		} > /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/sqlnet.ora
+if [ $oracle_version = '11' ];
+then
+
+		echo 'Регистрация TNSNAME и SQLNET Oracle 11' >> /home/$username/linux_installer/install_log.log
+
+		until [ -d /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/ ]
+		do
+				sleep 10
+		done
+
+		touch /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/tnsnames.ora
+			{
+			echo ''$name_db' ='
+			echo '  (DESCRIPTION ='
+			echo '    (ADDRESS_LIST ='
+			echo '      (ADDRESS = (PROTOCOL = TCP)(HOST = '$ip_base')(PORT = 1521))'
+			echo '    )'
+			echo '    (CONNECT_DATA ='
+			echo '      (SERVICE_NAME = '$name_db')'
+			echo '    )'
+			echo '  )'
+			} > /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/tnsnames.ora
+
+		touch /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/sqlnet.ora
+			{
+			echo '#SQLNET.AUTHENTICATION_SERVICES= (NTS)'
+			echo 'NAMES.DIRECTORY_PATH= (TNSNAMES, EZCONNECT)'
+			} > /home/$username/.wine/drive_c/oracle/product/11.1.0/client_1/network/admin/sqlnet.ora
+
 fi
 
-if [ $oracle_version = '12' ]; then
-	echo 'Регистрация TNSNAME и SQLNET Oracle 12' >> /home/$username/linux_installer/install_log.log
-	touch /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/tnsnames.ora
-		{
-		echo ''$name_db' ='
-		echo '  (DESCRIPTION ='
-		echo '    (ADDRESS_LIST ='
-		echo '      (ADDRESS = (PROTOCOL = TCP)(HOST = '$ip_base')(PORT = 1521))'
-		echo '    )'
-		echo '    (CONNECT_DATA ='
-		echo '      (SERVICE_NAME = '$name_db')'
-		echo '    )'
-		echo '  )'
-		} > /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/tnsnames.ora
-	touch /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/sqlnet.ora
-		{
-		echo '#SQLNET.AUTHENTICATION_SERVICES= (NTS)'
-		echo 'NAMES.DIRECTORY_PATH= (TNSNAMES, EZCONNECT)'
-		} > /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/sqlnet.ora
+if [ $oracle_version = '12' ];
+then
+
+		echo 'Регистрация TNSNAME и SQLNET Oracle 12' >> /home/$username/linux_installer/install_log.log
+
+		until [ -d /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/ ]
+		do
+				sleep 10
+		done
+
+		touch /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/tnsnames.ora
+			{
+			echo ''$name_db' ='
+			echo '  (DESCRIPTION ='
+			echo '    (ADDRESS_LIST ='
+			echo '      (ADDRESS = (PROTOCOL = TCP)(HOST = '$ip_base')(PORT = 1521))'
+			echo '    )'
+			echo '    (CONNECT_DATA ='
+			echo '      (SERVICE_NAME = '$name_db')'
+			echo '    )'
+			echo '  )'
+			} > /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/tnsnames.ora
+
+		touch /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/sqlnet.ora
+			{
+			echo '#SQLNET.AUTHENTICATION_SERVICES= (NTS)'
+			echo 'NAMES.DIRECTORY_PATH= (TNSNAMES, EZCONNECT)'
+			} > /home/$username/.wine/drive_c/oracle/product/12.2.0/client_1/network/admin/sqlnet.ora
 fi
 
-if [ $oracle_version = 'InstantClient' ]; then
+if [ $oracle_version = 'InstantClient' ];
+then
+
 	echo 'Регистрация TNSNAME и SQLNET InstantClient 19' >> /home/$username/linux_installer/install_log.log
+
+	until [ -d /home/$username/.wine/drive_c/oracle/ ]
+	do
+			sleep 10
+	done
+
 	touch /home/$username/.wine/drive_c/oracle/tnsnames.ora
 		{
 		echo ''$name_db' ='
@@ -1857,6 +1884,7 @@ if [ $oracle_version = 'InstantClient' ]; then
 		echo '    )'
 		echo '  )'
 		} > /home/$username/.wine/drive_c/oracle/tnsnames.ora
+
 	touch /home/$username/.wine/drive_c/oracle/sqlnet.ora
 		{
 		echo '#SQLNET.AUTHENTICATION_SERVICES= (NTS)'
@@ -1864,13 +1892,14 @@ if [ $oracle_version = 'InstantClient' ]; then
 		} > /home/$username/.wine/drive_c/oracle/sqlnet.ora
 		cd /home/$username/.wine/drive_c/oracle
 		wine regedit reg_instantclient
+
 fi
 }
 
 
 function Config_print(){
 	if [ -d $JAVA_catalog_arm ]; then
-	echo 'OpenOfficeInstallLocation='$libre_office_install_location'' > $JAVA_catalog_arm'OpenOfficeProps.properties'
+			echo 'OpenOfficeInstallLocation='$libre_office_install_location'' > $JAVA_catalog_arm'OpenOfficeProps.properties'
 	fi
 }
 
