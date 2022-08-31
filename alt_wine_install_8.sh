@@ -183,7 +183,6 @@ then
   echo "[ Устанавливаем WINE64 ]"
   make install >> $wine_log
   echo "[ Good luck with that ]"
-  read -n 1 -s -r -p "Нажмите любую кнопку для выхода из скрипта"
   #Компиляция win64, потом win32. После устанавливаем сначала второй, потом первый
 
 fi
