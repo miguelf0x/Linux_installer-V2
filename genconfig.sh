@@ -48,8 +48,11 @@ function Get_Base_Info(){
     read -r -p "Введите имя пользователя: " response
     username=$response
 
-    read -r -p "Введите IP-адрес сервера данных: " response
-    ip_mount=$response
+    until [[ $ip_mount ~= ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$ ]]
+    do
+      read -r -p "Введите IP-адрес сервера данных: " response
+      ip_mount=$response
+    done
 
     read -r -p "Введите имя аккаунта с доступом к папке ARIADNA: " response
     username_share=$response
@@ -232,9 +235,11 @@ function Get_DB_Info(){
     read -r -p "Введите имя БД: " response
     name_db=$response
 
-    read -r -p "Введите IP-адрес БД: " response
-    ip_base=$response
-
+    until [[ response ~= ^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$ ]]
+    do
+      read -r -p "Введите IP-адрес БД: " response
+      ip_base=$response
+    done
 }
 
 
