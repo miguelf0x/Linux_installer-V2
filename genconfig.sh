@@ -12,16 +12,16 @@
 # Variables                                                                   #
 ###############################################################################
 
-username='username'
-ip_mount='192.168.0.0'
-username_share='share'
+username=''
+ip_mount=''
+username_share=''
 password_share=''
 domain=''
 distr=''	      # AltLinux8,AltLinux9,RedOS,AstraLinux,RosaLinux,Ubuntu,Centos8
 icon_version=0  # 6 для Java 6, 8 для Java 8
 url_java=''
 name_db=''              #Название БД(обычно MED)
-ip_base='192.168.0.0'   #IP сервера с БД
+ip_base=''   #IP сервера с БД
 oracle_version=''
 postgre_sql=''		#При использовании указать версию 13.
 java_home=''
@@ -243,11 +243,12 @@ function Get_DB_Info(){
     name_db=$response
 
     local regexpr="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"
-    until [[ $ip_mount =~ $regexpr ]]
+    while [[ $response =~ $regexpr ]]
     do
       read -r -p "Введите IP-адрес БД: " response
-      ip_base=$response
     done
+    ip_base=$response
+
 }
 
 ##############################################################################
