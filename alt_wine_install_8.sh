@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wine_log = /tmp/wine_install.log
+wine_log=/tmp/wine_install.log
 
 case $EUID in
    0) ;;
