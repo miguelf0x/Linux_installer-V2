@@ -49,7 +49,7 @@ function Get_Base_Info(){
     username=$response
 
     regexpr="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"
-    while [[ $response =~ $regexpr ]]
+    while ! [[ $response =~ $regexpr ]]
     do
       read -r -p "Введите IP-адрес сетевой папки: " response
     done
@@ -243,7 +243,7 @@ function Get_DB_Info(){
     name_db=$response
 
     regexpr="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"
-    while [[ $response =~ $regexpr ]]
+    while ! [[ $response =~ $regexpr ]]
     do
       read -r -p "Введите IP-адрес БД: " response
     done
