@@ -437,13 +437,15 @@ then
   #Варианты AltLinux8,AltLinux9,RedOS,AstraLinux,RosaLinux,Ubuntu,Centos8
   distr=''
   url_java=""
+
+  source ./main.cfg
+
   log_file="/home/$username/linux_installer/install_log.log"
 
   ###############################################################################
   # Load CFG                                                                    #
   ###############################################################################
 
-  source ./main.cfg
 
   if ! [ -f $log_file ];
   then
