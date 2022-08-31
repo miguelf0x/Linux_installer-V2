@@ -2,22 +2,6 @@
 
 
 ###############################################################################
-# Variables                                                                   #
-###############################################################################
-
-username=''
-ip_mount=''
-username_share=''
-password_share=''
-domain=''
-
-#Варианты AltLinux8,AltLinux9,RedOS,AstraLinux,RosaLinux,Ubuntu,Centos8
-distr=''
-url_java=""
-log_file='/home/$username/linux_installer/install_log.log'
-
-
-###############################################################################
 # Functions                                                                   #
 ###############################################################################
 
@@ -439,6 +423,21 @@ esac
 
 if [ $EUID == 0 ];
 then
+
+  ###############################################################################
+  # Variables                                                                   #
+  ###############################################################################
+
+  username=''
+  ip_mount=''
+  username_share=''
+  password_share=''
+  domain=''
+
+  #Варианты AltLinux8,AltLinux9,RedOS,AstraLinux,RosaLinux,Ubuntu,Centos8
+  distr=''
+  url_java=""
+  log_file='/home/$username/linux_installer/install_log.log'
 
   ###############################################################################
   # Load CFG                                                                    #
