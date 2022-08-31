@@ -172,11 +172,11 @@ then
   cd build-win64
   echo "[ Собираем Win64 окружение ]"
   PKG_CONFIG_PATH=/usr/lib64 ../configure --enable-win64 --prefix=/usr >> $wine_log
-  make -j2 >> $wine_log
+  make -j4 >> $wine_log
   cd ../build-win32
   echo "[ Собираем Win32 окружение ]"
   PKG_CONFIG_PATH=/usr/lib ../configure --with-wine64=../build-win64 --prefix=/usr >> $wine_log
-  make -j2 >> $wine_log
+  make -j4 >> $wine_log
   echo "[ Устанавливаем WINE ]"
   make install >> $wine_log
   cd ../build-win64
