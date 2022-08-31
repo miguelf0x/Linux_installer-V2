@@ -49,11 +49,11 @@ function Get_Base_Info(){
     username=$response
 
     local regexpr="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"
-    until [[ $ip_mount =~ $regexpr ]]
+    while [[ $response =~ $regexpr ]]
     do
       read -r -p "Введите IP-адрес сетевой папки: " response
-      ip_mount=$response
     done
+    ip_mount=$response
 
     read -r -p "Введите имя аккаунта с доступом к папке ARIADNA: " response
     username_share=$response
