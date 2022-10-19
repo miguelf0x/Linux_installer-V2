@@ -277,7 +277,7 @@ function Generate_Config(){
     echo "" >> ./main.cfg
     echo "# Дистрибутив" >> ./main.cfg
     echo "distr=$distr" >> ./main.cfg
-    echo "# Разрядность системы" >> ./main.cfg
+    echo "# Разрядность системы [ 0 - x64, 1 - i586 ]" >> ./main.cfg
     echo "longbit=$longbit" >> ./main.cfg
     echo "" >> ./main.cfg
     echo "# Версия ярлыков" >> ./main.cfg
@@ -294,7 +294,7 @@ function Generate_Config(){
     echo "postgre_sql=$postgre_sql" >> ./main.cfg
     echo "# Домашний каталог JRE" >> ./main.cfg
     echo "java_home=$java_home" >> ./main.cfg
-    echo "# Признак использования MS Office [0 - да]" >> ./main.cfg
+    echo "# Признак использования MS Office [ 0 - да ]" >> ./main.cfg
     echo "msoffice=$msoffice" >> ./main.cfg
     echo "# Домашний каталог LibreOffice" >> ./main.cfg
     echo "libre_office_home=$libre_office_home" >> ./main.cfg
