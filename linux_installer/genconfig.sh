@@ -117,6 +117,8 @@ function Select_Distro(){
 
 function Select_Java_Version(){
 
+    echo "Внимание! Версии АРМ, выпущенные после декабря 2021 года не поддерживают работу с Java 6"
+
     if [[ $(getconf LONG_BIT) -eq 64 ]];
     then
 

@@ -55,10 +55,10 @@ else
 		cd /home/$username
 		echo 'Создание updater.sh' >> $log_file
 		touch updater.sh
-		echo 'Sh скрипт updater.sh создан' >> $log_file
+		echo 'Файл updater.sh создан' >> $log_file
 fi
 
-if [[ $distr = 'AltLinux8' || $distr = 'AltLinux9' || $distr = 'Centos8' ]];
+if [[ $distr = 'AltLinux8' || $distr = 'AltLinux9' || $distr = 'Centos8' || $distr = 'RedOS' ]];
 then
     {
       echo 'sleep 30'
@@ -71,7 +71,7 @@ then
     } > 'updater.sh'
 fi
 
-if [[ $distr = 'RedOS' || $distr = 'AstraLinux' || $distr = 'RosaLinux' || $distr = 'Ubuntu' ]];
+if [[ $distr = 'AstraLinux' || $distr = 'RosaLinux' || $distr = 'Ubuntu' ]];
 then
     {
       echo 'sleep 30'
@@ -84,7 +84,7 @@ then
     } > 'updater.sh'
 fi
 
-if [[ $distr = 'AstraLinux' || $distr = 'Ubuntu' ]]; then
+if [[ $distr = 'AstraLinux' || $distr = 'RosaLinux' || $distr = 'Ubuntu' ]]; then
 	sudo echo '@reboot sh /home/'$username'/updater.sh' > /var/spool/cron/root
 	else
 	echo '@reboot sh /home/'$username'/updater.sh' > /var/spool/cron/root
@@ -213,7 +213,7 @@ then
 		    echo 'JAVA Распакована'  >> $log_file
 		else
         echo 'Разархивация JAVA'  >> $log_file
-			  tar -xvz /home/$username/linux_installer/jre-8u301-linux-i586.tar
+			  tar -xf /home/$username/linux_installer/jre-8u301-linux-i586.tar
 			  echo 'Удаление jre-8u301-linux-i586.tar' >> $log_file
         rm -f jre-8u301-linux-i586.tar
     fi
@@ -256,7 +256,7 @@ then
 		    echo 'JAVA Распакована'  >> $log_file
     else
         echo 'Разархивация JAVA'  >> $log_file
-        tar -xvz /home/$username/linux_installer/jre-8u301-linux-x64.tar
+        tar -xf /home/$username/linux_installer/jre-8u301-linux-x64.tar
         echo 'Удаление jre-8u301-linux-x64.tar' >> $log_file
         rm -f jre-8u301-linux-x64.tar
     fi
@@ -340,7 +340,7 @@ if [[ $distr = 'RedOS' ]];
 then
   	echo 'Установка wine, конфигурация RedOS' >> $log_file
   	yum update && yum upgrade -y
-  	yum install wine winetricks -y
+  	yum install wine winetricks wine-mono -y
 fi
 
 if [[ $distr = 'RosaLinux' ]];
@@ -396,7 +396,7 @@ fi
 ###############################################################################
 
 function Run_Crontab() {
-    if [[ $distr = 'AstraLinux' ]];
+    if [[ 'AstraLinux' || $distr = 'RosaLinux' || $distr = 'Ubuntu' ]];
     then
         sudo systemctl enable cron
         sudo systemctl start cron
@@ -410,7 +410,7 @@ function Run_Crontab() {
 ###############################################################################
 
 function Host_for_oracle_client() {
-    echo '127.0.0.1	'$HOSTNAME' localhost '> /etc/hosts
+    echo '127.0.0.1	'$HOSTNAME' localhost' > /etc/hosts
 }
 
 ###############################################################################

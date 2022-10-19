@@ -55,57 +55,40 @@ function Select_Wine() {
 
 function Install_Winetricks() {
 
-if [ -d /home/$username/.wine ];
+if [[ $distr = 'AstraLinux' || $distr = 'Ubuntu' || $distr = 'RedOS' ]];
 then
+	WINEARCH=win32 winecfg
+fi
 
-	winetricks ie8
-	winetricks vb6run
-	winetricks mdac28
-	winetricks vcrun6
-	winetricks vcrun2010
-	winetricks vcrun2005
 
-else
+if [[ $distr = 'Centos8' ]];
+then
+	WINEARCH=win32 WINEPREFIX=~/.wine $wine wineboot
+fi
 
-	if [[ $distr = 'AstraLinux' || $distr = 'Ubuntu' ]];
-	then
-		WINEARCH=win32 winecfg
-	fi
 
-	if [[ $distr = 'Centos8' ]];
-	then
-		WINEARCH=win32 WINEPREFIX=~/.wine $wine wineboot
-	fi
+if [[ $distr = 'RosaLinux' ]];
+then
+	cd /home/$username
+	wget http://www.kegel.com/wine/winetricks
+	chmod a+x winetricks
+	WINEARCH=win32 winecfg
+fi
 
-	if [[ $distr = 'RosaLinux' ]];
-	then
-		cd /home/$username
-		wget http://www.kegel.com/wine/winetricks
-		chmod a+x winetricks
-	fi
 
-	winecfg
-	winetricks ie8
-	winetricks vb6run
-	winetricks mdac28
-	winetricks vcrun6
-	winetricks vcrun2010
-	winetricks vcrun2005
+if [[ $distr = 'Centos8' ]];
+then
+	$wine ~/.cache/winetricks/vcrun2010/vcredist_x86.exe
+	$wine ~/.cache/winetricks/vcrun2005/vcredist_x86.exe
+fi
 
-	if [[ $distr = 'Centos8' ]];
-	then
-		$wine ~/.cache/winetricks/vcrun2010/vcredist_x86.exe
-		$wine ~/.cache/winetricks/vcrun2005/vcredist_x86.exe
-	fi
 
-	if [[ $distr = 'AltLinux8' || $distr = 'AltLinux9' ]];
-	then
-		cd ~/.cache/winetricks/vcrun2005
-		$wine vcredist_x86.EXE
-		cd ~/.cache/winetricks/vcrun2010
-		$wine vcredist_x86.EXE
-	fi
-
+if [[ $distr = 'AltLinux8' || $distr = 'AltLinux9' ]];
+then
+	cd ~/.cache/winetricks/vcrun2005
+	$wine vcredist_x86.EXE
+	cd ~/.cache/winetricks/vcrun2010
+	$wine vcredist_x86.EXE
 fi
 
 
@@ -116,7 +99,6 @@ fi
 
 if [ $distr = 'AstraLinux' ];
 then
-
 	cd /home/$username/linux_installer
 
 	if [ -f wine_gecko-2.47-x86.msi ];
@@ -140,6 +122,19 @@ then
 	$wine msiexec /i wine_gecko-2.47-x86_64.msi
 
 fi
+
+if [ -d /home/$username/.wine ];
+then
+
+	winetricks ie8
+	winetricks vb6run
+	winetricks mdac28
+	winetricks vcrun6
+	winetricks vcrun2010
+	winetricks vcrun2005
+
+fi
+
 }
 
 ###############################################################################
@@ -332,7 +327,7 @@ function Cp_Arm(){
       mkdir /home/$username/.wine/drive_c/ARIADNA/APP
 	fi
 
-	cp -r /mnt/ARM/APP/. /home/$username/.wine/drive_c/ARIADNA/APP
+	cp -r /mnt/ARM/APP/ /home/$username/.wine/drive_c/ARIADNA/APP
   		else
   		echo 'ERR: Каталог /mnt/ARM/APP/ не монтирован' >> /home/$username/linux_installer/install_log.log
 	fi
