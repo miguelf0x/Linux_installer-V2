@@ -395,14 +395,18 @@ fi
 ###############################################################################
 
 function Run_Crontab() {
-    if [[ 'AstraLinux' || $distr = 'RosaLinux' || $distr = 'Ubuntu' ]];
+    if [[ $distr = 'AstraLinux' || $distr = 'RosaLinux' || $distr = 'Ubuntu' ]];
     then
         sudo systemctl enable cron
         sudo systemctl start cron
+    elif [[ $distr = 'RedOS' ]];
+    then
+        systemctl enable crond
+        systemctl start crond
+    else
+        systemctl enable cron
+        systemctl start cron
     fi
-
-    systemctl enable crond
-    systemctl start crond
     echo 'Служба Crontab включена, автозапуск добавлен' >> $log_file
 }
 
