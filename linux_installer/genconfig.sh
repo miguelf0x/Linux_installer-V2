@@ -305,7 +305,14 @@ function Generate_Config(){
     if [[ -f main.cfg ]];
     then
         echo "main.cfg создан успешно"
-        echo "main.cfg создан успешно" >> /home/$username/linux_installer/install_log.log
+        if [[ -f /home/$username/linux_installer/install_log.log ]];
+        then
+            echo "main.cfg создан успешно" >> /home/$username/linux_installer/install_log.log
+        else
+            mkdir /home/$username/linux_installer
+            touch /home/$username/linux_installer/install_log.log
+            echo "main.cfg создан успешно" >> /home/$username/linux_installer/install_log.log
+        fi
     fi
 
 }
