@@ -452,6 +452,13 @@ then
     touch $log_file
   fi
 
+  if ! [[ -f $log_file ]];
+  then
+    mkdir /home/$username/linux_installer
+    touch /home/$username/linux_installer/install_log.log
+    echo "[INFO] Файл логов создан." >> /home/$username/linux_installer/install_log.log
+  fi
+
   Mount_ARM
   Install_Java
   Install_Wine
